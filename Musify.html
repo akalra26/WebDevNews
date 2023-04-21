@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsify-your life into the News</title>
+</head>
+<style>
+    header {
+        width: 100%;
+        height: 150px;
+        background-color: teal;
+        text-align: center;
+        /* display: block; */
+        position: fixed;
+        margin: 0px 0px;
+        padding: 0px 0px;
+        top: 0;
+        left: 0;
+        border-bottom: 2px solid black;
+    }
+
+    h1 {
+        padding-top: 20px;
+        font-size: 25px;
+        font-family: cursive;
+        color: white;
+    }
+
+    h3 {
+        padding-top: 2px;
+        font-size: 15px;
+        font-family: cursive;
+        color: black;
+    }
+    
+
+    body {
+        background-color: rgb(167, 238, 238);
+        margin: 0;
+        /* Add this to remove default margin */
+        padding-top: 150px;
+    }
+
+    button {
+        align-items: center;
+    }
+    nav {
+            background-color:rgb(167, 238, 238);
+            color: white;
+            text-align: center;
+            padding: 10px;
+
+        }
+    .navbar{
+        display: inline;
+        margin: 50px;
+    }
+</style>
+
+<body>
+    <header>
+        <h1 class="mainheading">Newsify</h1>
+        <h3 class="mainheading">Your life into the News.</h3>
+        <hr>
+        <div style="margin-top: 0px;display:block;">
+            <nav>
+                <ul>
+                    <li class="navbar"><a href="#home">India</a></li>
+                    <li class="navbar"><a href="#aboutus">Countries</a></li>
+                    <li class="navbar"><a href="#interestrate">Categories</a></li>
+                    <li class="navbar"><a href="/loginpager.html">Language</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- <button onclick="showList()">Show List</button> -->
+    <script>
+        function showList() {
+            fetch("https://newsapi.org/v2/top-headlines?country=in&apiKey=d3f9940c57474a2d83635661abc89008")
+                .then(response => response.json())
+                .then(data => createList(data));
+        }
+
+        showList();
+
+        function createList(data) {
+            const mainUL = document.createElement('ol');
+            for (let i = 0; i < data.articles.length; i++) {
+                const notmainLI = document.createElement('li');
+                const studentOL = document.createElement('ol');
+                const anchorTag = document.createElement("a");
+                anchorTag.href = data.articles[i].url;
+                anchorTag.innerHTML = data.articles[i].title; // set anchor tag text to the article title
+                anchorTag.style["color"] = "black";
+                const studentLI = document.createElement('li');
+                studentLI.appendChild(anchorTag);
+                notmainLI.style["padding"] = "30px";
+                studentLI.style["font-weight"] = "bold";
+                studentLI.style["font-size"] = "x-large";
+                studentLI.style["font-color"] = "black";
+
+                studentOL.style["list-style"] = "none";
+
+                const marksLI = document.createElement('li');
+                marksLI.innerHTML = data.articles[i].description;
+                marksLI.style["font-size"] = "large";
+                marksLI.style["padding"] = "20px";
+                studentOL.appendChild(studentLI);
+                studentOL.appendChild(marksLI);
+
+                notmainLI.appendChild(studentOL);
+                mainUL.appendChild(notmainLI);
+            }
+            document.body.appendChild(mainUL);
+        }
+    </script>
+
+</body>
+
+</html>
